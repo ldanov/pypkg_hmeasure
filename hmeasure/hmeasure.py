@@ -14,9 +14,6 @@ from scipy.spatial import ConvexHull
 
 from sklearn.metrics import roc_curve
 
-def h_measure_fin(LH, pi0, pi1, B0, B1):
-    return 1 - (LH/(pi0*B0 + pi1*B1))
-
 def generate_B_coefs(a, b, n0, n1):
     pi1 = n1 / (n1 + n0)
     b10 = beta_func((1+a), b)
