@@ -2,11 +2,11 @@
 
 from distutils.core import setup
 
-setup(name='Distutils',
-      version='1.0',
-      description='Python Distribution Utilities',
-      author='Greg Ward',
-      author_email='-',
-      url='https://github.com/ldanov/mt_smote',
-      packages=['distutils', 'distutils.command'],
+setup(name='hmeasure',
+      version='0.1',
+      # description='Python Distribution Utilities',
+      # author='Lyubomir Danov',
+      # author_email='-',
+      # url='https://github.com/ldanov/mt_smote',
+      packages=['hmeasure']
      )
