@@ -86,17 +86,21 @@ def generate_convex_hull_points(invF0:numpy.ndarray, invF1:numpy.ndarray):
     G1 = numpy.sort(invF1[hull.vertices])
     return G0, G1
 
-def transform_roc_to_invF(fpr:numpy.ndarray, tpr:numpy.ndarray):
-    fpr = -numpy.sort(-fpr)
-    tpr = -numpy.sort(-tpr)
+def transform_roc_to_invF(fpr_untr:numpy.ndarray, tpr_untr:numpy.ndarray):
+    fpr = -numpy.sort(-fpr_untr)
+    # extend vector with explicit (0, 0)
+    fpr = numpy.concatenate([fpr, [0]])
+    tpr = -numpy.sort(-tpr_untr)
+    # extend vector with explicit (0, 0)
+    tpr = numpy.concatenate([tpr, [0]])
     return fpr, tpr
 
 def h_score(y_true:numpy.ndarray, y_score:numpy.ndarray, severity_ratio: float = None, pos_label = None) -> float:
     
     assert isinstance(y_true, numpy.ndarray)
-    fpr, tpr, _ = roc_curve(y_true, y_score, pos_label)
+    fpr_untr, tpr_untr, _ = roc_curve(y_true, y_score, pos_label, drop_intermediate=False)
 
-    fpr, tpr = transform_roc_to_invF(fpr, tpr)
+    fpr, tpr = transform_roc_to_invF(fpr_untr, tpr_untr)
     
     G0, G1 = generate_convex_hull_points(fpr, tpr)
     
@@ -115,8 +119,8 @@ def h_score(y_true:numpy.ndarray, y_score:numpy.ndarray, severity_ratio: float =
     LH = generate_LH_coef(n0=n0, n1=n1, G0=G0, G1=G1, b0=b0, b1=b1)
     B0, B1 = generate_B_coefs(a=a, b=b, n0=n0, n1=n1)
     
-    hm_score = generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH)
-    return hm_score
+    h_score = generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH)
+    return h_score
 
 def generate_h_measure(n0, n1, B0, B1, LH):
     return 1 - (LH / ((n0*B0 + n1*B1)/(n0+n1)))
