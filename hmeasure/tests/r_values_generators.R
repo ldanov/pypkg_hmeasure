@@ -47,8 +47,8 @@ paste0(F0, collapse = ", ")
 paste0(F1, collapse = ", ")
 invF1 = 1 - F1
 invF0 = 1 - F0
-paste0(invF0, collapse = ", ")
-paste0(invF1, collapse = ", ")
+paste0(invF0[-length(invF0)], collapse = ", ")
+paste0(invF1[-length(invF1)], collapse = ", ")
 chull.points <- chull(invF0, pmax(invF1, invF0))
 paste0(pmax(invF1, invF0), collapse = ", ")
 G0 <- invF0[chull.points]
