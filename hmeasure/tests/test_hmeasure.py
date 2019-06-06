@@ -80,7 +80,7 @@ def test_generate_h_measure():
 def test_generate_convex_hull_points():
 
     exp_G0, exp_G1 = get_G_case1()
-    invF0, invF1 = get_invF_values()
+    invF0, invF1 = get_invF_values_case1()
     assert isinstance(invF0, numpy.ndarray)
     assert isinstance(invF1, numpy.ndarray)
     
@@ -89,7 +89,7 @@ def test_generate_convex_hull_points():
     assert numpy.allclose(G1, exp_G1)
 
 def test_transform_roc_to_invF():
-    exp_invF0, exp_invF1 = get_invF_values()
+    exp_invF0, exp_invF1 = get_invF_values_case1()
     y_true, y_pred = get_model_data_case1()
     fpr_untr, tpr_untr, _ = roc_curve(y_true, y_pred, drop_intermediate=False)
     fpr, tpr = transform_roc_to_invF(fpr_untr, tpr_untr)
@@ -110,7 +110,7 @@ def test_case1():
     y_true, y_pred = get_model_data_case1()
     fpr_untr, tpr_untr, _ = roc_curve(y_true, y_pred, drop_intermediate=False)
 
-    exp_invF0, exp_invF1 = get_invF_values()
+    exp_invF0, exp_invF1 = get_invF_values_case1()
     invF0, invF1 = transform_roc_to_invF(fpr_untr, tpr_untr)
     assert numpy.allclose(exp_invF0, exp_invF0)
     assert numpy.allclose(exp_invF1, exp_invF1)
