@@ -4,9 +4,9 @@ from distutils.core import setup
 
 setup(name='hmeasure',
       version='0.1',
-      # description='Python Distribution Utilities',
-      # author='Lyubomir Danov',
+      description='H-Measure Classification Metric',
+      author='Lyubomir Danov',
       # author_email='-',
-      # url='https://github.com/ldanov/mt_smote',
+      url='https://github.com/ldanov/pypkg_hmeasure',
       packages=['hscore', 'tests']
      )
