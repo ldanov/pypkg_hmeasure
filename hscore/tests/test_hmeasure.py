@@ -10,7 +10,7 @@ from hscore.hscore import _generate_b_vecs
 from hscore.hscore import _generate_LH_coef
 from hscore.hscore import _generate_B_coefs
 from hscore.hscore import _generate_h_measure
-from hscore.hscore import transform_roc_to_invF
+from hscore.hscore import _transform_roc_to_invF
 from hscore.hscore import h_score
 from .utils import get_case_data_dict, drop_rep_zeros
 
@@ -132,13 +132,13 @@ def test__generate_convex_hull_points(case_data):
     assert numpy.allclose(G1, exp_G1)
 
 
-def test_transform_roc_to_invF(case_data):
+def test__transform_roc_to_invF(case_data):
     y_true = case_data['y_true']
     y_pred = case_data['y_pred']
     exp_invF0 = case_data['invF0']
     exp_invF1 = case_data['invF1']
     fpr_untr, tpr_untr, _ = roc_curve(y_true, y_pred, drop_intermediate=False)
-    fpr, tpr = transform_roc_to_invF(fpr_untr, tpr_untr)
+    fpr, tpr = _transform_roc_to_invF(fpr_untr, tpr_untr)
 
     # drop repeated 0s
     fpr = drop_rep_zeros(fpr)

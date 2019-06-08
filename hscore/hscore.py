@@ -98,7 +98,7 @@ def _generate_h_measure(n0, n1, B0, B1, LH):
     return 1 - (LH / ((n0*B0 + n1*B1)/(n0+n1)))
 
 
-def transform_roc_to_invF(fpr_untr: numpy.ndarray, tpr_untr: numpy.ndarray):
+def _transform_roc_to_invF(fpr_untr: numpy.ndarray, tpr_untr: numpy.ndarray):
     fpr = -numpy.sort(-fpr_untr)
     # extend vector with explicit (0, 0)
     fpr = numpy.concatenate([fpr, [0]])
@@ -184,7 +184,7 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     fpr_untr, tpr_untr, _ = roc_curve(
         y_true, y_score, pos_label, drop_intermediate=False)
 
-    fpr, tpr = transform_roc_to_invF(fpr_untr, tpr_untr)
+    fpr, tpr = _transform_roc_to_invF(fpr_untr, tpr_untr)
 
     G0, G1 = _generate_convex_hull_points(fpr, tpr)
 
