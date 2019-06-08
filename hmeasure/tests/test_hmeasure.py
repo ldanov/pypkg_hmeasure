@@ -3,15 +3,15 @@ import os
 import pytest
 
 from sklearn.metrics import roc_curve
-from hscore.hscore import _generate_convex_hull_points
-from hscore.hscore import _generate_beta_params
-from hscore.hscore import _generate_cost
-from hscore.hscore import _generate_b_vecs
-from hscore.hscore import _generate_LH_coef
-from hscore.hscore import _generate_B_coefs
-from hscore.hscore import _generate_h_measure
-from hscore.hscore import _transform_roc_to_invF
-from hscore.hscore import h_score
+from ..hsource import _generate_convex_hull_points
+from ..hsource import _generate_beta_params
+from ..hsource import _generate_cost
+from ..hsource import _generate_b_vecs
+from ..hsource import _generate_LH_coef
+from ..hsource import _generate_B_coefs
+from ..hsource import _generate_h_measure
+from ..hsource import _transform_roc_to_invF
+from ..hsource import h_score
 from .utils import get_case_data_dict, drop_rep_zeros
 
 _cases_to_run = [

@@ -8,5 +8,5 @@ setup(name='hmeasure',
       author='Lyubomir Danov',
       # author_email='-',
       url='https://github.com/ldanov/pypkg_hmeasure',
-      packages=['hscore']
+      packages=['hmeasure']
      )

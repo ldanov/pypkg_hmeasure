@@ -164,22 +164,19 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     Examples
     --------
     >>> import numpy
-    >>> from hscore import h_score
-    >>> y = import.array([1, 1, 2, 2])
-    >>> scores = import.array([0.1, 0.4, 0.35, 0.8])
-    >>> h_score = metrics.roc_curve(y, scores, pos_label=2)
-    >>> fpr
-    array([0. , 0. , 0.5, 0.5, 1. ])
-    >>> tpr
-    array([0. , 0.5, 0.5, 1. , 1. ])
-    >>> thresholds
-    array([1.8 , 0.8 , 0.4 , 0.35, 0.1 ])
+    >>> from hmeasure import h_score
+    >>> y = numpy.array([1, 1, 2, 2])
+    >>> scores = numpy.array([0.1, 0.4, 0.35, 0.8])
+    >>> h_score(y, preds, pos_label = 2)
+    0.6484375
+    >>> h_score(y, preds, severity_ratio=0.1, pos_label = 2)
+    0.742006883572737
 
     """
     if not isinstance(y_true, numpy.ndarray):
-        TypeError("y_true must be of type numpy.ndarray")
-    if not isinstance(y_true, numpy.ndarray):
-        TypeError("y_score must be of type numpy.ndarray")
+        raise TypeError("y_true must be of type numpy.ndarray")
+    if not isinstance(y_score, numpy.ndarray):
+        raise TypeError("y_score must be of type numpy.ndarray")
 
     fpr_untr, tpr_untr, _ = roc_curve(
         y_true, y_score, pos_label, drop_intermediate=False)
