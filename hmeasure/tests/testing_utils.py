@@ -1,4 +1,5 @@
 import numpy
+import json
 
 def get_n_case1():
     n0 = 147
@@ -49,3 +50,13 @@ def get_model_data_case1():
     y_pred = numpy.array(y_pred_list)
     return y_true, y_pred
 
+def get_case_data(case_path):
+    with open(case_path, 'r') as fp:
+        case_data = json.load(fp)
+
+    for key, value in case_data.items():
+        if isinstance(value, list):
+            value = numpy.array(value)
+            case_data[key] = value
+
+    return case_data
