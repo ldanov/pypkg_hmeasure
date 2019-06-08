@@ -155,16 +155,48 @@ generate_test_case <- function(
   }
   
   ## save output ####
-  jsonlite::write_json(x = data_collection, path = case_full_file_path, digits = NA, auto_unbox=TRUE)
+  jsonlite::write_json(x = data_collection, path = case_full_file_path, digits = NA, auto_unbox=TRUE, pretty=TRUE)
   return(normalizePath(case_full_file_path))
 
 }
 
 
+### Script ####
+generate_test_case(case_export_path = "./resources/", 
+                   case_export_name = "hmeasure_r_case_0.json", 
+                   seed = 10, 
+                   sev_ratio = 1)
+
+generate_test_case(case_export_path = "./resources/", 
+                   case_export_name = "hmeasure_r_case_1.json", 
+                   seed = 1, 
+                   sev_ratio = NA)
 
 
+generate_test_case(case_export_path = "./resources/", 
+                   case_export_name = "hmeasure_r_case_2.json", 
+                   seed = 20, 
+                   sev_ratio = 2)
 
+generate_test_case(case_export_path = "./resources/", 
+                   case_export_name = "hmeasure_r_case_3.json", 
+                   seed = 40, 
+                   sev_ratio = 4)
 
+generate_test_case(case_export_path = "./resources/", 
+                   case_export_name = "hmeasure_r_case_4.json", 
+                   seed = 1, 
+                   sev_ratio = 0.1)
+
+generate_test_case(case_export_path = "./resources/", 
+                   case_export_name = "hmeasure_r_case_5.json", 
+                   seed = 3, 
+                   sev_ratio = 0.3)
+
+generate_test_case(case_export_path = "./resources/", 
+                   case_export_name = "hmeasure_r_case_6.json", 
+                   seed = 13, 
+                   sev_ratio = -1.3)
 
 
 
