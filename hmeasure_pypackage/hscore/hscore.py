@@ -108,10 +108,79 @@ def transform_roc_to_invF(fpr_untr: numpy.ndarray, tpr_untr: numpy.ndarray):
     return fpr, tpr
 
 
-def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray, severity_ratio: float = None, pos_label=None) -> float:
+def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
+            severity_ratio: float = None, pos_label=None) -> float:
+    """Compute the h-measure as sklearn-compatible metric score
 
-    assert isinstance(y_true, numpy.ndarray)
-    assert isinstance(y_score, numpy.ndarray)
+    Note: this implementation is restricted to the binary classification task.
+
+    Read more in the original implementation: 
+    https://github.com/canagnos/hmeasure
+
+    Parameters
+    ----------
+
+    y_true : numpy.ndarray, shape = [n_samples]
+        True binary labels. If labels are not either {-1, 1} or {0, 1}, then
+        pos_label should be explicitly given.
+
+    y_score : numpy.ndarray, shape = [n_samples]
+        Target scores, can either be probability estimates of the positive
+        class, confidence values, or non-thresholded measure of decisions
+        (as returned by "decision_function" on some classifiers).
+
+    severity_ratio: float, default = None
+
+    pos_label : int or str, default=None
+        The label of the positive class.
+        When ``pos_label=None``, if y_true is in {-1, 1} or {0, 1},
+        ``pos_label`` is set to 1, otherwise an error will be raised.
+
+    Returns
+    -------
+    h_score : float
+
+    Notes
+    -----
+    The H-measure is a measure of classification performance proposed by 
+    D.J.Hand. It successfully overcomes the problem of capturing performance 
+    across multiple potential scenaria. Moreover, it is important in that it 
+    proposes a sensible criterion for coherence of performance metrics, which 
+    the H-measure satisfies but surprisingly several popular alternatives do 
+    not, notably including the Area Under the Curve (AUC) and its variants, 
+    such as the Gini coefficient. 
+
+    References
+    ----------
+    .. [1] Hand, D.J. 2009. Measuring classifier performance: a coherent 
+    alternative to the area under the ROC curve. Machine Learning, 77, 103–123.
+
+    .. [2] Hand, D.J. 2010. Evaluating diagnostic tests: the area under the 
+    ROC curve and the balance of errors. Statistics in Medicine, 29, 1502–1510.
+
+    .. [3] Hand, D.J. and Anagnostopoulos, C. 2014. A better Beta for the H 
+    measure of classification performance. Pattern Recognition Letters, 40, 41-46.
+
+    Examples
+    --------
+    >>> import numpy
+    >>> from hscore import h_score
+    >>> y = import.array([1, 1, 2, 2])
+    >>> scores = import.array([0.1, 0.4, 0.35, 0.8])
+    >>> h_score = metrics.roc_curve(y, scores, pos_label=2)
+    >>> fpr
+    array([0. , 0. , 0.5, 0.5, 1. ])
+    >>> tpr
+    array([0. , 0.5, 0.5, 1. , 1. ])
+    >>> thresholds
+    array([1.8 , 0.8 , 0.4 , 0.35, 0.1 ])
+
+    """
+    if not isinstance(y_true, numpy.ndarray):
+        TypeError("y_true must be of type numpy.ndarray")
+    if not isinstance(y_true, numpy.ndarray):
+        TypeError("y_score must be of type numpy.ndarray")
+
     fpr_untr, tpr_untr, _ = roc_curve(
         y_true, y_score, pos_label, drop_intermediate=False)
 
