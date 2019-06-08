@@ -3,15 +3,15 @@ import os
 import pytest
 
 from sklearn.metrics import roc_curve
-from hmeasure.hmeasure import generate_convex_hull_points
-from hmeasure.hmeasure import generate_beta_params
-from hmeasure.hmeasure import generate_cost
-from hmeasure.hmeasure import generate_b_vecs
-from hmeasure.hmeasure import generate_LH_coef
-from hmeasure.hmeasure import generate_B_coefs
-from hmeasure.hmeasure import generate_h_measure
-from hmeasure.hmeasure import transform_roc_to_invF
-from hmeasure.hmeasure import h_score
+from hscore.hscore import _generate_convex_hull_points
+from hscore.hscore import _generate_beta_params
+from hscore.hscore import _generate_cost
+from hscore.hscore import _generate_b_vecs
+from hscore.hscore import _generate_LH_coef
+from hscore.hscore import _generate_B_coefs
+from hscore.hscore import _generate_h_measure
+from hscore.hscore import transform_roc_to_invF
+from hscore.hscore import h_score
 from .utils import get_case_data_dict, drop_rep_zeros
 
 _cases_to_run = [
@@ -35,7 +35,7 @@ def case_data(request):
     return case_data
 
 
-def test_generate_beta_params(case_data):
+def test__generate_beta_params(case_data):
     data = case_data
     n0 = data['n0']
     n1 = data['n1']
@@ -43,18 +43,18 @@ def test_generate_beta_params(case_data):
 
     exp_a = data['a']
     exp_b = data['b']
-    a, b = generate_beta_params(n0, n1, sev_ratio=sev_ratio)
+    a, b = _generate_beta_params(n0, n1, sev_ratio=sev_ratio)
 
     assert numpy.isclose(a, exp_a)
     assert numpy.isclose(b, exp_b)
 
 
-def test_generate_beta_params_fail():
+def test__generate_beta_params_fail():
     with pytest.raises(ValueError):
-        _, _ = generate_beta_params(1, 1, sev_ratio=0)
+        _, _ = _generate_beta_params(1, 1, sev_ratio=0)
 
 
-def test_generate_cost(case_data):
+def test__generate_cost(case_data):
     n0 = case_data['n0']
     n1 = case_data['n1']
     G0 = case_data['G0']
@@ -62,24 +62,24 @@ def test_generate_cost(case_data):
 
     exp_cost = case_data['cost']
 
-    cost = generate_cost(n0, n1, G0, G1)
+    cost = _generate_cost(n0, n1, G0, G1)
     assert numpy.allclose(cost, exp_cost)
 
 
-def test_generate_b_vecs(case_data):
+def test__generate_b_vecs(case_data):
     cost = case_data['cost']
     a = case_data['a']
     b = case_data['b']
 
     exp_b0 = case_data['b0']
     exp_b1 = case_data['b1']
-    b0, b1 = generate_b_vecs(cost, a, b)
+    b0, b1 = _generate_b_vecs(cost, a, b)
 
     assert numpy.allclose(exp_b0, b0)
     assert numpy.allclose(exp_b1, b1)
 
 
-def test_generate_LH_coef(case_data):
+def test__generate_LH_coef(case_data):
     n0 = case_data['n0']
     n1 = case_data['n1']
     G0 = case_data['G0']
@@ -88,12 +88,12 @@ def test_generate_LH_coef(case_data):
     b1 = case_data['b1']
 
     exp_LH = case_data['LH']
-    LH = generate_LH_coef(n0, n1, G0, G1, b0, b1)
+    LH = _generate_LH_coef(n0, n1, G0, G1, b0, b1)
 
     assert numpy.isclose(LH, exp_LH)
 
 
-def test_generate_B_coefs(case_data):
+def test__generate_B_coefs(case_data):
     a = case_data['a']
     b = case_data['b']
     n0 = case_data['n0']
@@ -101,13 +101,13 @@ def test_generate_B_coefs(case_data):
 
     exp_B0 = case_data['B0']
     exp_B1 = case_data['B1']
-    B0, B1 = generate_B_coefs(a, b, n0, n1)
+    B0, B1 = _generate_B_coefs(a, b, n0, n1)
 
     assert numpy.isclose(B0, exp_B0)
     assert numpy.isclose(B1, exp_B1)
 
 
-def test_generate_h_measure(case_data):
+def test__generate_h_measure(case_data):
     n0 = case_data['n0']
     n1 = case_data['n1']
     B0 = case_data['B0']
@@ -115,18 +115,18 @@ def test_generate_h_measure(case_data):
     LH = case_data['LH']
 
     exp_H = case_data['H']
-    H = generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH)
+    H = _generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH)
 
     assert numpy.isclose(exp_H, H)
 
 
-def test_generate_convex_hull_points(case_data):
+def test__generate_convex_hull_points(case_data):
     invF0 = case_data['invF0']
     invF1 = case_data['invF1']
 
     exp_G0 = case_data['G0']
     exp_G1 = case_data['G1']
-    G0, G1 = generate_convex_hull_points(invF0, invF1)
+    G0, G1 = _generate_convex_hull_points(invF0, invF1)
 
     assert numpy.allclose(G0, exp_G0)
     assert numpy.allclose(G1, exp_G1)

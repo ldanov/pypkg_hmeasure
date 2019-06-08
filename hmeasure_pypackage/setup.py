@@ -8,5 +8,5 @@ setup(name='hmeasure',
       # author='Lyubomir Danov',
       # author_email='-',
       # url='https://github.com/ldanov/mt_smote',
-      packages=['hmeasure', 'tests']
+      packages=['hscore', 'tests']
      )
