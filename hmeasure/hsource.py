@@ -86,7 +86,11 @@ def _generate_beta_params(n0, n1, sev_ratio):
 
 def _generate_convex_hull_points(invF0: numpy.ndarray, invF1: numpy.ndarray):
     pair_max = numpy.maximum(invF0, invF1)
-    chull_cand = numpy.array(list(zip(invF0, pair_max)))
+    try:
+        chull_cand = numpy.array(list(zip(invF0, pair_max)))
+    except Exception as e:
+        print(list(zip(invF0, pair_max)))
+        raise e
 
     hull = ConvexHull(chull_cand)
     G0 = numpy.sort(invF0[hull.vertices])
@@ -178,17 +182,17 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     if not isinstance(y_score, numpy.ndarray):
         raise TypeError("y_score must be of type numpy.ndarray")
 
+    if pos_label is None:
+        pos_label = 1.
+    # make y_true a boolean vector
+    y_true = (y_true == pos_label)
+
     fpr_untr, tpr_untr, _ = roc_curve(
         y_true, y_score, pos_label, drop_intermediate=False)
 
     fpr, tpr = _transform_roc_to_invF(fpr_untr, tpr_untr)
 
     G0, G1 = _generate_convex_hull_points(fpr, tpr)
-
-    if pos_label is None:
-        pos_label = 1.
-    # make y_true a boolean vector
-    y_true = (y_true == pos_label)
 
     n1 = sum(y_true)
     n0 = len(y_true) - n1
