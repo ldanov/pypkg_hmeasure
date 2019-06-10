@@ -83,18 +83,23 @@ def _generate_beta_params(n0, n1, sev_ratio):
         raise ValueError
     return a, b
 
+
 def _generate_convex_hull_points(invF0: numpy.ndarray, invF1: numpy.ndarray):
+
     pair_max = numpy.maximum(invF0, invF1)
-    
-    chull_cand = numpy.array(list(zip(invF0, pair_max)))
-    
-    try:
+
+    if numpy.array_equal(invF0, pair_max):
+        G0 = numpy.array([0, 1])
+        G1 = numpy.array([0, 1])
+
+    else:
+        chull_cand = numpy.array(list(zip(invF0, pair_max)))
         hull = ConvexHull(chull_cand)
-    except Exception as e:
-        raise type(e)(e.message + ' happens with %s' % chull_cand)
-    
-    G0 = numpy.sort(invF0[hull.vertices])
-    G1 = numpy.sort(invF1[hull.vertices])
+        vert = hull.vertices
+
+        G0 = numpy.sort(invF0[vert])
+        G1 = numpy.sort(invF1[vert])
+
     return G0, G1
 
 
@@ -184,6 +189,7 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
 
     if pos_label is None:
         pos_label = 1.
+
     # make y_true a boolean vector
     y_true = (y_true == pos_label)
 
@@ -194,8 +200,8 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
 
     G0, G1 = _generate_convex_hull_points(fpr, tpr)
 
-    n1 = sum(y_true)
-    n0 = len(y_true) - n1
+    n1 = y_true.sum()
+    n0 = y_true.shape[0] - n1
 
     a, b = _generate_beta_params(n0=n0, n1=n1, sev_ratio=severity_ratio)
     cost = _generate_cost(n0=n0, n1=n1, G0=G0, G1=G1)
@@ -205,4 +211,11 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     B0, B1 = _generate_B_coefs(a=a, b=b, n0=n0, n1=n1)
 
     h_score = _generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH)
+
+    # due to floating point imprecision
+    # when convex equals random line,
+    # set lower bound at 0
+    if h_score < 0:
+        h_score = 0
+
     return h_score
