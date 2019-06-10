@@ -103,8 +103,16 @@ def _generate_convex_hull_points(invF0: numpy.ndarray, invF1: numpy.ndarray):
     return G0, G1
 
 
-def _generate_h_measure(n0, n1, B0, B1, LH):
-    return 1 - (LH / ((n0*B0 + n1*B1)/(n0+n1)))
+def _generate_h_measure(n0, n1, B0, B1, LH, fix_prec = True):
+
+    a = (LH * (n0+n1))
+    b = (n0*B0 + n1*B1)
+
+    # due to floating point imprecision
+    # set lower bound at 0
+    if fix_prec and numpy.isclose(a, b) and a < b:
+        a = b
+    return 1 - numpy.divide(a, b)
 
 
 def _transform_roc_to_invF(fpr_untr: numpy.ndarray, tpr_untr: numpy.ndarray):
@@ -210,12 +218,6 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     LH = _generate_LH_coef(n0=n0, n1=n1, G0=G0, G1=G1, b0=b0, b1=b1)
     B0, B1 = _generate_B_coefs(a=a, b=b, n0=n0, n1=n1)
 
-    h_score = _generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH)
-
-    # due to floating point imprecision
-    # when convex equals random line,
-    # set lower bound at 0
-    if h_score < 0:
-        h_score = 0
+    h_score = _generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH, fix_prec=True)
 
     return h_score
