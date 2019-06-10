@@ -83,16 +83,16 @@ def _generate_beta_params(n0, n1, sev_ratio):
         raise ValueError
     return a, b
 
-
 def _generate_convex_hull_points(invF0: numpy.ndarray, invF1: numpy.ndarray):
     pair_max = numpy.maximum(invF0, invF1)
+    
+    chull_cand = numpy.array(list(zip(invF0, pair_max)))
+    
     try:
-        chull_cand = numpy.array(list(zip(invF0, pair_max)))
+        hull = ConvexHull(chull_cand)
     except Exception as e:
-        print(list(zip(invF0, pair_max)))
-        raise e
-
-    hull = ConvexHull(chull_cand)
+        raise type(e)(e.message + ' happens with %s' % chull_cand)
+    
     G0 = numpy.sort(invF0[hull.vertices])
     G1 = numpy.sort(invF1[hull.vertices])
     return G0, G1
