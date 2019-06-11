@@ -18,17 +18,21 @@ from sklearn.metrics import roc_curve
 
 
 def _generate_B_coefs(a, b, n0, n1):
+
     pi1 = n1 / (n1 + n0)
     b10 = beta_func((1+a), b)
     b01 = beta_func(a, (1+b))
     b00 = beta_func(a, b)
+
     B0 = beta_dist.cdf(x=pi1, a=(1+a), b=b) * b10/b00
     B1 = (beta_dist.cdf(x=1, a=a, b=(1+b)) -
           beta_dist.cdf(x=pi1, a=a, b=(1+b))) * b01/b00
+
     return B0, B1
 
 
 def _generate_LH_coef(n0, n1, G0, G1, b0, b1):
+
     pi1 = n1 / (n1 + n0)
     pi0 = n0 / (n1 + n0)
     b0_head = b0[1:]
@@ -43,11 +47,14 @@ def _generate_LH_coef(n0, n1, G0, G1, b0, b1):
 
 
 def _generate_b_vecs(cost, a, b):
+
     b10 = beta_func((1+a), b)
     b01 = beta_func(a, (1+b))
     b00 = beta_func(a, b)
-    b0 = beta_dist.cdf(x=cost, a=(1 + a), b=b) * b10 / b00
-    b1 = beta_dist.cdf(x=cost, a=a, b=(1 + b)) * b01 / b00
+
+    b0 = beta_dist.cdf(x=cost, a=(1 + a), b=b) * ( b10 / b00 )
+    b1 = beta_dist.cdf(x=cost, a=a, b=(1 + b)) * ( b01 / b00 )
+
     return b0, b1
 
 
@@ -58,8 +65,8 @@ def _generate_cost(n0, n1, G0: numpy.ndarray, G1: numpy.ndarray):
     G0_head = G0[1:]
     G0_norm = G0[:-1]
 
-    c1 = n1 / (n1 + n0) * (G1_head - G1_norm)
-    c0 = n0 / (n1 + n0) * (G0_head - G0_norm)
+    c1 = ( n1 / (n1 + n0) ) * ( G1_head - G1_norm )
+    c0 = ( n0 / (n1 + n0) ) * ( G0_head - G0_norm )
 
     c_more = c1 / (c1 + c0)
 
@@ -69,6 +76,7 @@ def _generate_cost(n0, n1, G0: numpy.ndarray, G1: numpy.ndarray):
 
 
 def _generate_beta_params(n0, n1, sev_ratio):
+
     if sev_ratio is None:
         sr = n1 / n0
     else:
@@ -81,6 +89,7 @@ def _generate_beta_params(n0, n1, sev_ratio):
         b = n0/(n0+n1) + 1
     else:
         raise ValueError
+
     return a, b
 
 
@@ -115,16 +124,18 @@ def _generate_h_measure(n0, n1, B0, B1, LH, fix_prec = True):
     # set lower bound at 0
     if fix_prec and numpy.isclose(a, b) and a < b:
         a = b
+
     return 1 - numpy.divide(a, b)
 
 
 def _transform_roc_to_invF(fpr_untr: numpy.ndarray, tpr_untr: numpy.ndarray):
     fpr = -numpy.sort(-fpr_untr)
+    tpr = -numpy.sort(-tpr_untr)
+
     # extend vector with explicit (0, 0)
     fpr = numpy.concatenate([fpr, [0]])
-    tpr = -numpy.sort(-tpr_untr)
-    # extend vector with explicit (0, 0)
     tpr = numpy.concatenate([tpr, [0]])
+
     return fpr, tpr
 
 
