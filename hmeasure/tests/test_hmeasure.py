@@ -119,6 +119,21 @@ def test__generate_h_measure(case_data):
 
     assert numpy.isclose(exp_H, H)
 
+def test__generate_h_measure_negative():
+    n0 = 1
+    n1 = 1
+    B0 = 0.1
+    B1 = 0.1
+    LH = 0.1000000001
+
+    exp_H = 0
+    H0 = _generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH, fix_prec=False)
+    H1 = _generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH, fix_prec=True)
+
+    # test that H0 is a very small negative value
+    assert exp_H > H0 and numpy.isclose(exp_H, H0)
+    assert exp_H == H1
+
 
 def test__generate_convex_hull_points(case_data):
     invF0 = case_data['invF0']
@@ -131,6 +146,16 @@ def test__generate_convex_hull_points(case_data):
     assert numpy.allclose(G0, exp_G0)
     assert numpy.allclose(G1, exp_G1)
 
+def test__generate_convex_hull_points_exception():
+    invF0 = numpy.array([0,0.1,0.2,0.3,0.4,1])
+    invF1 = numpy.array([0,0.01,0.02,0.03,0.04,1])
+
+    exp_G0 = numpy.array([0, 1])
+    exp_G1 = numpy.array([0, 1])
+    G0, G1 = _generate_convex_hull_points(invF0, invF1)
+
+    assert numpy.allclose(G0, exp_G0)
+    assert numpy.allclose(G1, exp_G1)
 
 def test__transform_roc_to_invF(case_data):
     y_true = case_data['y_true']
