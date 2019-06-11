@@ -97,14 +97,10 @@ def _generate_convex_hull_points(invF0: numpy.ndarray, invF1: numpy.ndarray):
 
     pair_max = numpy.maximum(invF0, invF1)
 
-    # if all invF0>=invF1
+    # if all invF0>=invF1, pair_max = invF0
+    # chull_cand is a line and
     # ConvexHull results in QHullError
-    # because a line is given as input
-    if numpy.array_equal(invF0, pair_max):
-        G0 = numpy.array([0, 1])
-        G1 = numpy.array([0, 1])
-
-    else:
+    if not numpy.array_equal(invF0, pair_max):
         chull_cand = numpy.array(list(zip(invF0, pair_max)))
         hull = ConvexHull(chull_cand)
         vert = hull.vertices
@@ -112,20 +108,24 @@ def _generate_convex_hull_points(invF0: numpy.ndarray, invF1: numpy.ndarray):
         G0 = numpy.sort(invF0[vert])
         G1 = numpy.sort(invF1[vert])
 
+    else:
+        G0 = numpy.array([0, 1])
+        G1 = numpy.array([0, 1])
+
     return G0, G1
 
 
 def _generate_h_measure(n0, n1, B0, B1, LH, fix_prec = True):
 
-    a = (LH * (n0+n1))
-    b = (n0*B0 + n1*B1)
+    j = (LH * (n0+n1))
+    k = (n0*B0 + n1*B1)
 
     # due to floating point imprecision
     # set lower bound at 0
-    if fix_prec and numpy.isclose(a, b) and a < b:
-        a = b
+    if fix_prec and numpy.isclose(j, k) and j > k:
+        j = k
 
-    return 1 - numpy.divide(a, b)
+    return 1 - numpy.divide(j, k)
 
 
 def _transform_roc_to_invF(fpr_untr: numpy.ndarray, tpr_untr: numpy.ndarray):
