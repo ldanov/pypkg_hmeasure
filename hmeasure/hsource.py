@@ -88,6 +88,9 @@ def _generate_convex_hull_points(invF0: numpy.ndarray, invF1: numpy.ndarray):
 
     pair_max = numpy.maximum(invF0, invF1)
 
+    # if all invF0>=invF1
+    # ConvexHull results in QHullError
+    # because a line is given as input
     if numpy.array_equal(invF0, pair_max):
         G0 = numpy.array([0, 1])
         G1 = numpy.array([0, 1])
