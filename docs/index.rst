@@ -12,10 +12,3 @@ Welcome to hmeasure's documentation!
 
    hmeasure
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
