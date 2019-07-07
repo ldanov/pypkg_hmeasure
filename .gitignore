@@ -1,8 +1,15 @@
+# Visual Studio Code setup
 .vscode/
+
+# Jupyter notebook checkpoints
 .ipynb_checkpoints/
+
+# Cython compilation cache
 __pycache__/
-build/
-docs/_build/
+
+# Build artifacts
+/build/
+
 # Compiled python modules.
 *.pyc
 
@@ -13,4 +20,4 @@ docs/_build/
 /*.egg-info
 
 # local folder for artifacts
-local/
+/local/
