@@ -17,5 +17,5 @@ setup(name=__PROJECT_NAME__,
       url=__URL__,
       packages=__PACKAGES__,
       #TODO: find lower required versions
-      install_requires = ['numpy == 1.16.3', 'scikit_learn == 0.21.2', 'scipy == 1.2.1']
+      install_requires = ['numpy>=1.16.3', 'scikit_learn>=0.21.2', 'scipy>=1.2.1']
      )
