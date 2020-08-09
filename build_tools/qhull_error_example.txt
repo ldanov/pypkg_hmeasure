@@ -1,0 +1,67 @@
+import numpy
+from sklearn import datasets
+from sklearn import svm
+from sklearn.model_selection import cross_val_score, cross_validate, GridSearchCV,StratifiedKFold
+from sklearn.metrics import accuracy_score, make_scorer
+from hmeasure import h_score
+iris = datasets.load_breast_cancer()
+clf = svm.SVC(kernel='poly', C=1, probability=True, max_iter=20)
+scoring = {'H-Measure': make_scorer(h_score, needs_proba=True, pos_label=0), 'Accuracy': make_scorer(accuracy_score)}
+cv_scores = cross_validate(clf, iris.data, iris.target, cv=5, n_jobs=6, scoring=scoring)
+
+QhullError: QH6154 Qhull precision error: Initial simplex is flat (facet 1 is coplanar with the interior point)
+
+While executing:  | qhull i Qt
+Options selected for Qhull 2015.2.r 2016/01/18:
+  run-id 1032230379  incidence  Qtriangulate  _pre-merge  _zero-centrum
+  _max-width  1  Error-roundoff 8.6e-16  _one-merge 4.3e-15
+  _near-inside 2.1e-14  Visible-distance 1.7e-15  U-coplanar-distance 1.7e-15
+  Width-outside 3.4e-15  _wide-facet 1e-14
+
+precision problems (corrected unless 'Q0' or an error)
+      2 flipped facets
+
+The input to qhull appears to be less than 2 dimensional, or a
+computation has overflowed.
+
+Qhull could not construct a clearly convex simplex from points:
+- p1(v2):     1     1
+- p0(v1):     1     1
+- p115(v0):     0     0
+
+The center point is coplanar with a facet, or a vertex is coplanar
+with a neighboring facet.  The maximum round off error for
+computing distances is 8.6e-16.  The center point, facets and distances
+to the center point are as follows:
+
+center point   0.6667   0.6667
+
+facet p0 p115 distance=    0
+facet p1 p115 distance=    0
+facet p1 p0 distance= -0.47
+
+These points either have a maximum or minimum x-coordinate, or
+they maximize the determinant for k coordinates.  Trial points
+are first selected from points that maximize a coordinate.
+
+The min and max coordinates for each dimension are:
+  0:         0         1  difference=    1
+  1:         0         1  difference=    1
+
+If the input should be full dimensional, you have several options that
+may determine an initial simplex:
+  - use 'QJ'  to joggle the input and make it full dimensional
+  - use 'QbB' to scale the points to the unit cube
+  - use 'QR0' to randomly rotate the input for different maximum points
+  - use 'Qs'  to search all points for the initial simplex
+  - use 'En'  to specify a maximum roundoff error less than 8.6e-16.
+  - trace execution with 'T3' to see the determinant for each point.
+
+If the input is lower dimensional:
+  - use 'QJ' to joggle the input and make it full dimensional
+  - use 'Qbk:0Bk:0' to delete coordinate k from the input.  You should
+    pick the coordinate with the least range.  The hull will have the
+    correct topology.
+  - determine the flat containing the points, rotate the points
+    into a coordinate plane, and delete the other coordinates.
+  - add one or more points to make the input full dimensional.

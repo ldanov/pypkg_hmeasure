@@ -1,0 +1,1 @@
+pigar -p ./requirements.txt -P ./hmeasure -o >= -i ./hmeasure/tests/

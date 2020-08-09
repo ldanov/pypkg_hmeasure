@@ -214,7 +214,7 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     y_true = (y_true == pos_label)
 
     fpr_untr, tpr_untr, _ = roc_curve(
-        y_true, y_score, pos_label, drop_intermediate=False)
+        y_true, y_score, pos_label=pos_label, drop_intermediate=False)
 
     fpr, tpr = _transform_roc_to_invF(fpr_untr, tpr_untr)
 
