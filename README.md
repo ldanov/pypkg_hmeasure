@@ -6,7 +6,7 @@ A Python translation of the R package `hmeasure` ([Link](https://github.com/cana
 
 ## Installation 
 ```
-python path/to/hmeasure's/setup.py install
+pip install hmeasure
 ```
 
 ## Usage
