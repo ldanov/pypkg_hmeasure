@@ -10,8 +10,8 @@ __pycache__/
 # Build artifacts
 /build/
 
-# Build artifacts
-/docs/_build/
+# Docs build
+# /docs/_build/
 
 # Compiled python modules.
 *.pyc
