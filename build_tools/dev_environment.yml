@@ -1,0 +1,10 @@
+name: pypkg_hmeasure
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pigar=0.9.2=py38_0
+  - pytest=6.0.1=py38h32f6830_0
+  - python=3.8.5=h4d41432_2_cpython
+  - sphinx=3.2.0=py_0
+  - twine=3.2.0=py38h32f6830_0
