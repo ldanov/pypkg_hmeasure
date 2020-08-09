@@ -1,7 +1,10 @@
 import os
 import re
+
 from setuptools import setup
+
 from hmeasure._version import __version__
+
 
 def _parse_requirements(filepath):
     with open(filepath, mode='r') as fp:
@@ -12,6 +15,7 @@ def _parse_requirements(filepath):
     rqr = [re.sub('==', '~=', x.replace('\n', '')) for x in rqr_cl]
 
     return rqr
+
 
 __PROJECT_NAME__ = 'hmeasure'
 __DESCRIPTION__ = 'H-Measure Classification Metric'
@@ -27,5 +31,5 @@ setup(name=__PROJECT_NAME__,
       author=__AUTHORS__,
       url=__URL__,
       packages=__PACKAGES__,
-      install_requires = __INSTALL_REQUIRES__
-     )
+      install_requires=__INSTALL_REQUIRES__
+      )
