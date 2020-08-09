@@ -2,16 +2,10 @@
 # https://github.com/damnever/pigar
 
 # hmeasure_pypackage\hscore\hscore.py: 11
-# hmeasure_pypackage\tests\test_hmeasure.py: 1
-# hmeasure_pypackage\tests\utils.py: 1
-numpy == 1.16.3
-
-# hmeasure_pypackage\tests\test_hmeasure.py: 3
-pytest == 4.5.0
+numpy >= 1.16.1
 
 # hmeasure_pypackage\hscore\hscore.py: 17
-# hmeasure_pypackage\tests\test_hmeasure.py: 5
-scikit_learn == 0.21.2
+scikit_learn >= 0.21.1
 
 # hmeasure_pypackage\hscore\hscore.py: 13,14,15
-scipy == 1.2.1
+scipy >= 1.2.1
