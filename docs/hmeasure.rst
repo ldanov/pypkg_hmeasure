@@ -1,10 +1,7 @@
 hmeasure package
 ================
 
-hmeasure.hsource module
------------------------
-
-.. automodule:: hmeasure.hsource
+.. automodule:: hmeasure
    :members:
    :undoc-members:
    :show-inheritance:

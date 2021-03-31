@@ -10,5 +10,6 @@ Welcome to hmeasure's documentation!
    :maxdepth: 4
    :caption: Contents:
 
+   readme
    hmeasure
 

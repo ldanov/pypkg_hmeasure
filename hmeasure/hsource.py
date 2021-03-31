@@ -159,6 +159,10 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
         (as returned by "decision_function" on some classifiers).
 
     severity_ratio: float, default = None
+        The relative cost of misclassification of the positive class to the 
+        other class(es). Value of 0 raises error. By default None, which is
+        translated into number of positive / number of other class(es). See
+        [3]_ or [4]_ for more detail.
 
     pos_label : int or str, default=None
         The label of the positive class.
@@ -177,18 +181,21 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     proposes a sensible criterion for coherence of performance metrics, which 
     the H-measure satisfies but surprisingly several popular alternatives do 
     not, notably including the Area Under the Curve (AUC) and its variants, 
-    such as the Gini coefficient. 
+    such as the Gini coefficient [1]_ [2]_ [3]_ [4]_. 
 
     References
     ----------
-    .. [1] Hand, D.J. 2009. Measuring classifier performance: a coherent 
-    alternative to the area under the ROC curve. Machine Learning, 77, 103–123.
+    .. [1] Hand, D.J. 2009. Measuring classifier performance: a coherent
+     alternative to the area under the ROC curve. Machine Learning, 77, 103–123.
 
     .. [2] Hand, D.J. 2010. Evaluating diagnostic tests: the area under the 
-    ROC curve and the balance of errors. Statistics in Medicine, 29, 1502–1510.
+     ROC curve and the balance of errors. Statistics in Medicine, 29, 1502–1510.
 
     .. [3] Hand, D.J. and Anagnostopoulos, C. 2014. A better Beta for the H 
-    measure of classification performance. Pattern Recognition Letters, 40, 41-46.
+     measure of classification performance. Pattern Recognition Letters, 40, 41-46.
+
+    .. [4] Hmeasure CRAN Reference for original R package
+     https://cran.r-project.org/package=hmeasure
 
     Examples
     --------

@@ -1,8 +1,8 @@
-# hmeasure
+# README
 
 ## Description 
 
-A Python translation of the R package `hmeasure` ([Link](https://github.com/canagnos/hmeasure)).
+A Python translation of the R package `hmeasure` ([GitHub](https://github.com/canagnos/hmeasure)) ([CRAN](https://cran.r-project.org/package=hmeasure)).
 
 ## Installation 
 ```
