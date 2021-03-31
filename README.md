@@ -45,3 +45,6 @@ array([0.84901876, 0.10282827, 0.43752488, 0.46004468, 0.90878931,
 >>> h_score(y_true, y_pred, severity_ratio=0.5)
 0.10750123502531805
 ```
+## Questions and comments
+In case of questions or comments, write an email:  
+`ldanov@users.noreply.github.com`
