@@ -50,8 +50,8 @@ def _generate_b_vecs(cost, a, b):
     b01 = beta_func(a, (1+b))
     b00 = beta_func(a, b)
 
-    b0 = beta_dist.cdf(x=cost, a=(1 + a), b=b) * ( b10 / b00 )
-    b1 = beta_dist.cdf(x=cost, a=a, b=(1 + b)) * ( b01 / b00 )
+    b0 = beta_dist.cdf(x=cost, a=(1 + a), b=b) * (b10 / b00)
+    b1 = beta_dist.cdf(x=cost, a=a, b=(1 + b)) * (b01 / b00)
 
     return b0, b1
 
@@ -63,8 +63,8 @@ def _generate_cost(n0, n1, G0: numpy.ndarray, G1: numpy.ndarray):
     G0_head = G0[1:]
     G0_norm = G0[:-1]
 
-    c1 = ( n1 / (n1 + n0) ) * ( G1_head - G1_norm )
-    c0 = ( n0 / (n1 + n0) ) * ( G0_head - G0_norm )
+    c1 = (n1 / (n1 + n0)) * (G1_head - G1_norm)
+    c0 = (n0 / (n1 + n0)) * (G0_head - G0_norm)
 
     c_more = c1 / (c1 + c0)
 
@@ -113,7 +113,7 @@ def _generate_convex_hull_points(invF0: numpy.ndarray, invF1: numpy.ndarray):
     return G0, G1
 
 
-def _generate_h_measure(n0, n1, B0, B1, LH, fix_prec = True):
+def _generate_h_measure(n0, n1, B0, B1, LH, fix_prec=True):
 
     j = (LH * (n0+n1))
     k = (n0*B0 + n1*B1)
@@ -201,18 +201,43 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     --------
     >>> import numpy
     >>> from hmeasure import h_score
-    >>> y = numpy.array([1, 1, 2, 2])
-    >>> scores = numpy.array([0.1, 0.4, 0.35, 0.8])
-    >>> h_score(y, preds, pos_label = 2)
-    0.6484375
-    >>> h_score(y, preds, severity_ratio=0.1, pos_label = 2)
-    0.742006883572737
+    >>> rng = numpy.random.default_rng(66)
+    >>> y_true = rng.integers(low=0, high=2, size=10)
+    >>> y_true
+    array([1, 1, 0, 1, 1, 0, 1, 1, 1, 0])
+    >>> # y_pred random sampled in interval [0, 1)
+    >>> y_pred = (1 - 0) * rng.random(10) + 0
+    >>> y_pred
+    array([0.84901876, 0.10282827, 0.43752488, 0.46004468, 0.90878931,
+    ...    0.79177719, 0.5297229 , 0.13803906, 0.73166264, 0.22959056])
+    >>> h_score(y_true, y_pred)
+    0.18889596344769588
+    >>> n1, n0 = y_true.sum(), y_true.shape[0]-y_true.sum()
+    >>> h_score(y_true, y_pred, severity_ratio=(n1/n0))
+    0.18889596344769588
+    >>> h_score(y_true, y_pred, severity_ratio=0.7)
+    0.13502616807120948
+    >>> h_score(y_true, y_pred, severity_ratio=-0.7)
+    0.18310946512079307
+    >>> h_score(y_true, y_pred, severity_ratio=0.1)
+    0.001212529211507385
+    >>> h_score(y_true, y_pred, severity_ratio=0.5)
+    0.10750123502531805
 
     """
     if not isinstance(y_true, numpy.ndarray):
-        raise TypeError("y_true must be of type numpy.ndarray")
+        raise TypeError("y_true must be of type numpy.ndarray!")
     if not isinstance(y_score, numpy.ndarray):
-        raise TypeError("y_score must be of type numpy.ndarray")
+        raise TypeError("y_score must be of type numpy.ndarray!")
+    if len(numpy.unique(y_true)) != 2:
+        raise TypeError("y_true must represent a binary classification!")
+    true_max, true_min = y_true.max(), y_true.min()
+    if not (y_score <= true_max).all():
+        raise TypeError(
+            "y_score must contain values not larger than max true label {}!".format(true_max))
+    if not (y_score >= true_min).all():
+        raise TypeError(
+            "y_score must contain values not smaller than min true label {}!".format(true_min))
 
     if pos_label is None:
         pos_label = 1.
@@ -220,8 +245,10 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     # make y_true a boolean vector
     y_true = (y_true == pos_label)
 
-    fpr_untr, tpr_untr, _ = roc_curve(
-        y_true, y_score, pos_label=pos_label, drop_intermediate=False)
+    fpr_untr, tpr_untr, _ = roc_curve(y_true=y_true,
+                                      y_score=y_score,
+                                      pos_label=True,
+                                      drop_intermediate=False)
 
     fpr, tpr = _transform_roc_to_invF(fpr_untr, tpr_untr)
 
@@ -237,6 +264,8 @@ def h_score(y_true: numpy.ndarray, y_score: numpy.ndarray,
     LH = _generate_LH_coef(n0=n0, n1=n1, G0=G0, G1=G1, b0=b0, b1=b1)
     B0, B1 = _generate_B_coefs(a=a, b=b, n0=n0, n1=n1)
 
-    h_score = _generate_h_measure(n0=n0, n1=n1, B0=B0, B1=B1, LH=LH, fix_prec=True)
+    h_score = _generate_h_measure(n0=n0, n1=n1,
+                                  B0=B0, B1=B1,
+                                  LH=LH, fix_prec=True)
 
     return h_score

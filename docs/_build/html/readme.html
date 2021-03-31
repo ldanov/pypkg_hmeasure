@@ -170,7 +170,12 @@
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>To install the hmeasure library use pip:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">hmeasure</span>
+</pre></div>
+</div>
+<p>or install directly from source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
 </div>
 </div>
@@ -178,12 +183,28 @@
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hmeasure</span> <span class="kn">import</span> <span class="n">h_score</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">pos_label</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">0.6484375</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">preds</span><span class="p">,</span> <span class="n">severity_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">pos_label</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-<span class="go">0.742006883572737</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">66</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span>
+<span class="go">array([1, 1, 0, 1, 1, 0, 1, 1, 1, 0])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># y_pred random sampled in interval [0, 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span>
+<span class="go">array([0.84901876, 0.10282827, 0.43752488, 0.46004468, 0.90878931,</span>
+<span class="gp">... </span>   <span class="mf">0.79177719</span><span class="p">,</span> <span class="mf">0.5297229</span> <span class="p">,</span> <span class="mf">0.13803906</span><span class="p">,</span> <span class="mf">0.73166264</span><span class="p">,</span> <span class="mf">0.22959056</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">0.18889596344769588</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n1</span><span class="p">,</span> <span class="n">n0</span> <span class="o">=</span> <span class="n">y_true</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">y_true</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">y_true</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">severity_ratio</span><span class="o">=</span><span class="p">(</span><span class="n">n1</span><span class="o">/</span><span class="n">n0</span><span class="p">))</span>
+<span class="go">0.18889596344769588</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">severity_ratio</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="go">0.13502616807120948</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">severity_ratio</span><span class="o">=-</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="go">0.18310946512079307</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">severity_ratio</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="go">0.001212529211507385</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">severity_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="go">0.10750123502531805</span>
 </pre></div>
 </div>
 </div>
