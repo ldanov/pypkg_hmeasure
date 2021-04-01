@@ -22,7 +22,7 @@ jobs:
           # You can use whatever directory your project uses, for example "wwwroot".
           # Such a directory does *not* have to already exist in your repo,
           # it could be an output directory created dynamically by your static website builder.
-          source-directory: ./docs/_build/html
+          source-directory: ./docs/_build/html/.
 
           # Optional. Default value "gh_pages".
           # It specifies the temporary branch which hosts the static website.
