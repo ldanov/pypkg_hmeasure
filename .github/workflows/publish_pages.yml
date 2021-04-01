@@ -1,44 +1,44 @@
 name: Update GH Pages
 
-on:
-  push:
-    branches:
-      # NOTE: You may want to limit the trigger branch to be "main" or "master" etc.
-      - master
+# on:
+#   push:
+#     branches:
+#       # NOTE: You may want to limit the trigger branch to be "main" or "master" etc.
+#       - master
 
-# based on https://github.com/ammaraskar/sphinx-action-test/blob/master/.github/workflows/default.yml
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out
-        uses: actions/checkout@v2
+# # based on https://github.com/ammaraskar/sphinx-action-test/blob/master/.github/workflows/default.yml
+# jobs:
+#   publish:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out
+#         uses: actions/checkout@v2
 
-      - name: Generate website
-        uses: ammaraskar/sphinx-action@master
-        with:
-          build-command: "sphinx-build -c ./docs/ -b html ./docs/ ./docs/_build/html"
-          docs-folder: "docs/"
-      - uses: actions/upload-artifact@v1
-        with:
-          name: DocumentationHTML
-          path: docs/_build/html/
+#       - name: Generate website
+#         uses: ammaraskar/sphinx-action@master
+#         with:
+#           build-command: "sphinx-build -c ./docs/ -b html ./docs/ ./docs/_build/html"
+#           docs-folder: "docs/"
+#       - uses: actions/upload-artifact@v1
+#         with:
+#           name: DocumentationHTML
+#           path: docs/_build/html/
 
-      - name: Commit documentation changes
-        run: |
-          git clone https://github.com/ammaraskar/sphinx-action-test.git --branch gh-pages --single-branch gh-pages
-          cp -r docs/_build/html/* gh-pages/
-          cd gh-pages
-          touch .nojekyll
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Update documentation" -a || true
-          # The above command will fail if no changes were present, so we ignore
-          # that.
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          branch: gh-pages
-          directory: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Commit documentation changes
+#         run: |
+#           git clone https://github.com/ammaraskar/sphinx-action-test.git --branch gh-pages --single-branch gh-pages
+#           cp -r docs/_build/html/* gh-pages/
+#           cd gh-pages
+#           touch .nojekyll
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "GitHub Action"
+#           git add .
+#           git commit -m "Update documentation" -a || true
+#           # The above command will fail if no changes were present, so we ignore
+#           # that.
+#       - name: Push changes
+#         uses: ad-m/github-push-action@master
+#         with:
+#           branch: gh-pages
+#           directory: gh-pages
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
