@@ -6,7 +6,7 @@ A Python translation of the R package `hmeasure` ([GitHub](https://github.com/ca
 
 ## Installation 
 
-To install the hmeasure library use pip:
+To install the hmeasure library from [PyPI](https://pypi.org/project/hmeasure/) use pip:
 
 ```
 pip install hmeasure
@@ -34,7 +34,7 @@ array([0.84901876, 0.10282827, 0.43752488, 0.46004468, 0.90878931,
 >>> h_score(y_true, y_pred)
 0.18889596344769588
 ```
-For more examples and information check the code or the generated sphinx documentation under `./docs/_build/html/index.html`
+For more examples and information check the [documentation](https://pypkg-hmeasure.readthedocs.io/en/latest/)
 
 ## Questions and comments
 In case of questions or comments, write an email:  

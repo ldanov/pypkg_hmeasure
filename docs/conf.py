@@ -22,6 +22,9 @@ sys.path.insert(0, mod_dir)
 project = 'hmeasure'
 copyright = '2019, Lyubomir Danov'
 author = 'Lyubomir Danov'
+from hmeasure import __version__
+release = __version__
+
 
 # -- General configuration ---------------------------------------------------
 
