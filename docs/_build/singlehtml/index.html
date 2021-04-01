@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>hmeasure package &mdash; hmeasure 0.1.7 documentation</title>
+  <title>hmeasure 0.1.7 documentation</title>
   
 
   
@@ -39,8 +39,7 @@
 
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="README" href="readme.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -54,7 +53,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> hmeasure
+            <a href="#" class="icon icon-home"> hmeasure
           
 
           
@@ -66,13 +65,6 @@
           
 
           
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
 
           
         </div>
@@ -82,15 +74,20 @@
           
             
             
-              
             
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">hmeasure package</a></li>
+              <!-- Local TOC -->
+              <div class="local-toc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-readme">README</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#questions-and-comments">Questions and comments</a></li>
 </ul>
-
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-hmeasure">hmeasure package</a></li>
+</ul>
+</div>
             
           
         </div>
@@ -104,7 +101,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">hmeasure</a>
+          <a href="#">hmeasure</a>
         
       </nav>
 
@@ -135,15 +132,13 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
-      <li>hmeasure package</li>
+      <li>hmeasure 0.1.7 documentation</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/hmeasure.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -156,8 +151,53 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-hmeasure">
-<span id="hmeasure-package"></span><h1>hmeasure package<a class="headerlink" href="#module-hmeasure" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-hmeasure-s-documentation">
+<h1>Welcome to hmeasure’s documentation!<a class="headerlink" href="#welcome-to-hmeasure-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<span id="document-readme"></span><div class="section" id="readme">
+<h2>README<a class="headerlink" href="#readme" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>A Python translation of the R package <code class="docutils literal notranslate"><span class="pre">hmeasure</span></code> (<a class="reference external" href="https://github.com/canagnos/hmeasure">GitHub</a>) (<a class="reference external" href="https://cran.r-project.org/package=hmeasure">CRAN</a>).</p>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>To install the hmeasure library from <a class="reference external" href="https://pypi.org/project/hmeasure/">PyPI</a> use pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">hmeasure</span>
+</pre></div>
+</div>
+<p>or install directly from source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hmeasure</span> <span class="kn">import</span> <span class="n">h_score</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">66</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span>
+<span class="go">array([1, 1, 0, 1, 1, 0, 1, 1, 1, 0])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># y_pred random sampled in interval [0, 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span>
+<span class="go">array([0.84901876, 0.10282827, 0.43752488, 0.46004468, 0.90878931,</span>
+<span class="gp">... </span>   <span class="mf">0.79177719</span><span class="p">,</span> <span class="mf">0.5297229</span> <span class="p">,</span> <span class="mf">0.13803906</span><span class="p">,</span> <span class="mf">0.73166264</span><span class="p">,</span> <span class="mf">0.22959056</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">h_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="go">0.18889596344769588</span>
+</pre></div>
+</div>
+<p>For more examples and information check the <a class="reference external" href="https://pypkg-hmeasure.readthedocs.io/en/latest/">documentation</a></p>
+</div>
+<div class="section" id="questions-and-comments">
+<h3>Questions and comments<a class="headerlink" href="#questions-and-comments" title="Permalink to this headline">¶</a></h3>
+<p>In case of questions or comments, write an email:<span class="raw-html-m2r"><br></span>
+<code class="docutils literal notranslate"><span class="pre">ldanov&#64;users.noreply.github.com</span></code></p>
+</div>
+</div>
+<span id="document-hmeasure"></span><div class="section" id="module-hmeasure">
+<span id="hmeasure-package"></span><h2>hmeasure package<a class="headerlink" href="#module-hmeasure" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="hmeasure.h_score">
 <code class="sig-prename descclassname">hmeasure.</code><code class="sig-name descname">h_score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">y_score</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">severity_ratio</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pos_label</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; float<a class="reference internal" href="_modules/hmeasure/hsource.html#h_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hmeasure.h_score" title="Permalink to this definition">¶</a></dt>
@@ -246,15 +286,14 @@ measure of classification performance. Pattern Recognition Letters, 40, 41-46.</
 </dd></dl>
 
 </div>
+</div>
+</div>
 
 
            </div>
            
           </div>
           <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="readme.html" class="btn btn-neutral float-left" title="README" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-    </div>
 
   <hr/>
 
