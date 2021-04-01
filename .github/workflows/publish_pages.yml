@@ -13,10 +13,8 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
 
-      - name: Generate your content
-        run: ;
-          make -C docs/ html
-          mv -t . ./docs/_build/html/
+      - name: Generate website
+        run: make -C docs/ html
 
       - name: Publish current workdir (which contains generated content) to GitHub Pages
         uses: rayluo/github-pages-overwriter@v1.1
@@ -27,7 +25,7 @@ jobs:
           # You can use whatever directory your project uses, for example "wwwroot".
           # Such a directory does *not* have to already exist in your repo,
           # it could be an output directory created dynamically by your static website builder.
-          source-directory: ./html
+          source-directory: ./docs/_build/html
 
           # Optional. Default value "gh_pages".
           # It specifies the temporary branch which hosts the static website.
